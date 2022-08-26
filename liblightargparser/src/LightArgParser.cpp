@@ -19,7 +19,7 @@ public:
     {
         bool ret = true;
 
-        for (size_t i = 1; i < argc; ++i)
+        for (int i = 1; i < argc; ++i)
         {
             std::string s{argv[i]};
             std::string key = s;
