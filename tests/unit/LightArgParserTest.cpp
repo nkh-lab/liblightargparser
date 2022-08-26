@@ -17,12 +17,12 @@ TEST(LightArgParserTest, ParseOneShortFormConfigKey)
 
     LightArgParser lap(argc, argv);
 
-    std::map<ArgKey_t, ArgVal_t> config, data;
+    std::map<ArgKey_t, ArgVal_t> config_args, data_args;
 
-    EXPECT_TRUE(lap.Parse(config, data));
-    EXPECT_EQ(config.size(), 1);
-    EXPECT_NE(config.find("v"), config.end());
-    EXPECT_EQ(data.size(), 0);
+    EXPECT_TRUE(lap.Parse(config_args, data_args));
+    EXPECT_EQ(config_args.size(), 1);
+    EXPECT_NE(config_args.find("v"), config_args.end());
+    EXPECT_EQ(data_args.size(), 0);
 }
 
 TEST(LightArgParserTest, ParseOneLongFormConfigKey)
@@ -32,12 +32,12 @@ TEST(LightArgParserTest, ParseOneLongFormConfigKey)
 
     LightArgParser lap(argc, argv);
 
-    std::map<ArgKey_t, ArgVal_t> config, data;
+    std::map<ArgKey_t, ArgVal_t> config_args, data_args;
 
-    EXPECT_TRUE(lap.Parse(config, data));
-    EXPECT_EQ(config.size(), 1);
-    EXPECT_NE(config.find("version"), config.end());
-    EXPECT_EQ(data.size(), 0);
+    EXPECT_TRUE(lap.Parse(config_args, data_args));
+    EXPECT_EQ(config_args.size(), 1);
+    EXPECT_NE(config_args.find("version"), config_args.end());
+    EXPECT_EQ(data_args.size(), 0);
 }
 
 TEST(LightArgParserTest, ParseUnOneShortFormConfigKey)
@@ -47,11 +47,11 @@ TEST(LightArgParserTest, ParseUnOneShortFormConfigKey)
 
     LightArgParser lap(argc, argv);
 
-    std::map<ArgKey_t, ArgVal_t> config, data;
+    std::map<ArgKey_t, ArgVal_t> config_args, data_args;
 
-    EXPECT_FALSE(lap.Parse(config, data));
-    EXPECT_EQ(config.size(), 0);
-    EXPECT_EQ(data.size(), 0);
+    EXPECT_FALSE(lap.Parse(config_args, data_args));
+    EXPECT_EQ(config_args.size(), 0);
+    EXPECT_EQ(data_args.size(), 0);
 }
 
 TEST(LightArgParserTest, ParseUnOneLongFormConfigKey)
@@ -61,11 +61,11 @@ TEST(LightArgParserTest, ParseUnOneLongFormConfigKey)
 
     LightArgParser lap(argc, argv);
 
-    std::map<ArgKey_t, ArgVal_t> config, data;
+    std::map<ArgKey_t, ArgVal_t> config_args, data_args;
 
-    EXPECT_FALSE(lap.Parse(config, data));
+    EXPECT_FALSE(lap.Parse(config, data_args));
     EXPECT_EQ(config.size(), 0);
-    EXPECT_EQ(data.size(), 0);
+    EXPECT_EQ(data_args.size(), 0);
 }
 
 TEST(LightArgParserTest, ParseUnOneShortFormConfigKey1)
@@ -75,9 +75,9 @@ TEST(LightArgParserTest, ParseUnOneShortFormConfigKey1)
 
     LightArgParser lap(argc, argv);
 
-    std::map<ArgKey_t, ArgVal_t> config, data;
+    std::map<ArgKey_t, ArgVal_t> config, data_args;
 
-    EXPECT_FALSE(lap.Parse(config, data));
+    EXPECT_FALSE(lap.Parse(config, data_args));
     EXPECT_EQ(config.size(), 0);
     EXPECT_EQ(data.size(), 0);
 }

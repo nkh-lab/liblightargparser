@@ -15,7 +15,7 @@ public:
 
     ~LightArgParserImpl() = default;
 
-    bool Parse(std::map<ArgKey_t, ArgVal_t>& config, std::map<ArgKey_t, ArgVal_t>& data)
+    bool Parse(std::map<ArgKey_t, ArgVal_t>& config_args, std::map<ArgKey_t, ArgVal_t>& data)
     {
         bool ret = true;
 
@@ -52,7 +52,7 @@ public:
                     break;
                 }
 
-                config.emplace(key, val);
+                config_args.emplace(key, val);
             }
             else
             {
@@ -62,7 +62,7 @@ public:
 
         if (!ret)
         {
-            config.clear();
+            config_args.clear();
             data.clear();
         }
 
