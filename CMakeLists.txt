@@ -17,6 +17,7 @@ file(GLOB SUBDIRS
     "external"
     "lib*"
     "app*"
+    "tests"
     )
 
 foreach(X IN LISTS SUBDIRS)
@@ -25,10 +26,3 @@ foreach(X IN LISTS SUBDIRS)
     endif()
 endforeach()
 
-if (${PROJECT_NAME}_BUILD_CTESTS )
-    add_subdirectory(tests/component)
-endif()
-
-if (${PROJECT_NAME}_BUILD_UTESTS)
-    add_subdirectory(tests/unit)
-endif()

@@ -10,179 +10,178 @@ constexpr size_t arraySize(T (&)[N])
     return N;
 }
 
-TEST(LightArgParserTest, ParseOneShortFormConfigKey)
+TEST(LightArgParserTest, ParseShortFormConfigKey)
 {
     const char* argv[] = {"", "-v"};
     int argc = arraySize(argv);
 
     LightArgParser lap(argc, argv);
 
-    std::map<ArgKey_t, ArgVal_t> config_args, data_args;
+    Args_t config_args, data_args;
+    std::string bad_arg;
 
-    EXPECT_TRUE(lap.Parse(config_args, data_args));
+    EXPECT_TRUE(lap.Parse(config_args, data_args, bad_arg));
     EXPECT_EQ(config_args.size(), 1);
     EXPECT_NE(config_args.find("v"), config_args.end());
     EXPECT_EQ(data_args.size(), 0);
 }
 
-TEST(LightArgParserTest, ParseOneLongFormConfigKey)
+TEST(LightArgParserTest, ParseLongFormConfigKey)
 {
     const char* argv[] = {"", "--version"};
     int argc = arraySize(argv);
 
     LightArgParser lap(argc, argv);
 
-    std::map<ArgKey_t, ArgVal_t> config_args, data_args;
+    Args_t config_args, data_args;
+    std::string bad_arg;
 
-    EXPECT_TRUE(lap.Parse(config_args, data_args));
+    EXPECT_TRUE(lap.Parse(config_args, data_args, bad_arg));
     EXPECT_EQ(config_args.size(), 1);
-    EXPECT_NE(config_args.find("version"), config_args.end());
+    EXPECT_TRUE(LightArgParserHelper::KeyExists(config_args, "version"));
     EXPECT_EQ(data_args.size(), 0);
 }
 
-TEST(LightArgParserTest, ParseUnOneShortFormConfigKey)
+TEST(LightArgParserTest, ParseComplexShortFormConfigKey)
+{
+    const char* argv[] = {"", "-xyz"};
+    int argc = arraySize(argv);
+
+    LightArgParser lap(argc, argv);
+
+    Args_t config_args, data_args;
+    std::string bad_arg;
+
+    EXPECT_TRUE(lap.Parse(config_args, data_args, bad_arg));
+    EXPECT_EQ(config_args.size(), 3);
+    EXPECT_TRUE(LightArgParserHelper::KeyExists(config_args, "x"));
+    EXPECT_TRUE(LightArgParserHelper::KeyExists(config_args, "y"));
+    EXPECT_TRUE(LightArgParserHelper::KeyExists(config_args, "z"));
+    EXPECT_EQ(data_args.size(), 0);
+}
+
+TEST(LightArgParserTest, ParseUnvalidShortFormConfigKey)
 {
     const char* argv[] = {"", "--v"};
     int argc = arraySize(argv);
 
     LightArgParser lap(argc, argv);
 
-    std::map<ArgKey_t, ArgVal_t> config_args, data_args;
+    Args_t config_args, data_args;
+    std::string bad_arg;
 
-    EXPECT_FALSE(lap.Parse(config_args, data_args));
+    EXPECT_FALSE(lap.Parse(config_args, data_args, bad_arg));
     EXPECT_EQ(config_args.size(), 0);
     EXPECT_EQ(data_args.size(), 0);
+    EXPECT_EQ(bad_arg, argv[1]);
 }
 
-TEST(LightArgParserTest, ParseUnOneLongFormConfigKey)
-{
-    const char* argv[] = {"", "-version"};
-    int argc = arraySize(argv);
-
-    LightArgParser lap(argc, argv);
-
-    std::map<ArgKey_t, ArgVal_t> config_args, data_args;
-
-    EXPECT_FALSE(lap.Parse(config, data_args));
-    EXPECT_EQ(config.size(), 0);
-    EXPECT_EQ(data_args.size(), 0);
-}
-
-TEST(LightArgParserTest, ParseUnOneShortFormConfigKey1)
-{
-    const char* argv[] = {"", "---v"};
-    int argc = arraySize(argv);
-
-    LightArgParser lap(argc, argv);
-
-    std::map<ArgKey_t, ArgVal_t> config, data_args;
-
-    EXPECT_FALSE(lap.Parse(config, data_args));
-    EXPECT_EQ(config.size(), 0);
-    EXPECT_EQ(data.size(), 0);
-}
-
-TEST(LightArgParserTest, ParseUnOneLongFormConfigKey1)
+TEST(LightArgParserTest, ParseUnvalidLongFormConfigKey)
 {
     const char* argv[] = {"", "---version"};
     int argc = arraySize(argv);
 
     LightArgParser lap(argc, argv);
 
-    std::map<ArgKey_t, ArgVal_t> config, data;
+    Args_t config_args, data_args;
+    std::string bad_arg;
 
-    EXPECT_FALSE(lap.Parse(config, data));
-    EXPECT_EQ(config.size(), 0);
-    EXPECT_EQ(data.size(), 0);
+    EXPECT_FALSE(lap.Parse(config_args, data_args, bad_arg));
+    EXPECT_EQ(config_args.size(), 0);
+    EXPECT_EQ(data_args.size(), 0);
+    EXPECT_EQ(bad_arg, argv[1]);
 }
 
-TEST(LightArgParserTest, ParseOneShortFormConfigKeyValue)
+TEST(LightArgParserTest, ParseShortFormConfigKeyValue)
 {
-    const char* argv[] = {"", "-f=~/temp/file1"};
+    const char* argv[] = {"", "-k=value"};
     int argc = arraySize(argv);
 
     LightArgParser lap(argc, argv);
 
-    std::map<ArgKey_t, ArgVal_t> config, data;
+    Args_t config_args, data_args;
+    std::string bad_arg;
 
-    EXPECT_TRUE(lap.Parse(config, data));
-    EXPECT_EQ(config.size(), 1);
-    EXPECT_EQ(config["f"], "~/temp/file1");
-    EXPECT_EQ(data.size(), 0);
+    EXPECT_TRUE(lap.Parse(config_args, data_args, bad_arg));
+    EXPECT_EQ(config_args.size(), 1);
+    EXPECT_EQ(config_args["k"], "value");
+    EXPECT_EQ(data_args.size(), 0);
 }
 
-TEST(LightArgParserTest, ParseOneLongFormConfigKeyValue)
+TEST(LightArgParserTest, ParseUnvalidShortFormConfigKeyValue)
 {
-    const char* argv[] = {"", "--file=~/temp/file1"};
+    const char* argv[] = {"", "-xyz=value"};
     int argc = arraySize(argv);
 
     LightArgParser lap(argc, argv);
 
-    std::map<ArgKey_t, ArgVal_t> config, data;
+    Args_t config_args, data_args;
+    std::string bad_arg;
 
-    EXPECT_TRUE(lap.Parse(config, data));
-    EXPECT_EQ(config.size(), 1);
-    EXPECT_EQ(config["file"], "~/temp/file1");
-    EXPECT_EQ(data.size(), 0);
+    EXPECT_FALSE(lap.Parse(config_args, data_args, bad_arg));
+    EXPECT_EQ(config_args.size(), 0);
+    EXPECT_EQ(data_args.size(), 0);
+    EXPECT_EQ(bad_arg, argv[1]);
 }
 
-TEST(LightArgParserTest, ParseOneDataKeyValue)
+TEST(LightArgParserTest, ParseLongFormConfigKeyValue)
 {
-    const char* argv[] = {"", "DataKey1=DataValue1"};
+    const char* argv[] = {"", "--key=value"};
     int argc = arraySize(argv);
 
     LightArgParser lap(argc, argv);
 
-    std::map<ArgKey_t, ArgVal_t> config, data;
+    Args_t config_args, data_args;
+    std::string bad_arg;
 
-    EXPECT_TRUE(lap.Parse(config, data));
-    EXPECT_EQ(config.size(), 0);
-    EXPECT_EQ(data.size(), 1);
-    EXPECT_EQ(data["DataKey1"], "DataValue1");
+    EXPECT_TRUE(lap.Parse(config_args, data_args, bad_arg));
+    EXPECT_EQ(config_args.size(), 1);
+    EXPECT_EQ(config_args["key"], "value");
+    EXPECT_EQ(data_args.size(), 0);
+}
+
+TEST(LightArgParserTest, ParseDataKeyValue)
+{
+    const char* argv[] = {"", "key=value"};
+    int argc = arraySize(argv);
+
+    LightArgParser lap(argc, argv);
+
+    Args_t config_args, data_args;
+    std::string bad_arg;
+
+    EXPECT_TRUE(lap.Parse(config_args, data_args, bad_arg));
+    EXPECT_EQ(config_args.size(), 0);
+    EXPECT_EQ(data_args.size(), 1);
+    EXPECT_EQ(data_args["key"], "value");
 }
 
 TEST(LightArgParserTest, ParseMix)
 {
     const char* argv[] = {
         "",
-        "-v",
+        "-c",
         "DataKey1=DataValue1",
-        "--file=~/temp/file1",
-        "DataKey2=DataValue2",
-        "DataKey3=DataValue3"};
-    int argc = arraySize(argv);
-
-    LightArgParser lap(argc, argv);
-
-    std::map<ArgKey_t, ArgVal_t> config, data;
-
-    EXPECT_TRUE(lap.Parse(config, data));
-    EXPECT_EQ(config.size(), 2);
-    EXPECT_NE(config.find("v"), config.end());
-    EXPECT_EQ(config["file"], "~/temp/file1");
-    EXPECT_EQ(data.size(), 3);
-    EXPECT_EQ(data["DataKey1"], "DataValue1");
-    EXPECT_EQ(data["DataKey2"], "DataValue2");
-    EXPECT_EQ(data["DataKey3"], "DataValue3");
-}
-
-TEST(LightArgParserTest, ParseUnMix)
-{
-    const char* argv[] = {
-        "",
-        "-v",
-        "DataKey1=DataValue1",
-        "--file=~/temp/file1",
+        "--ConfigKey2=ConfigValue2",
         "DataKey2=DataValue2",
         "DataKey3=DataValue3",
-        "---help"};
+        "-xyz"};
     int argc = arraySize(argv);
 
     LightArgParser lap(argc, argv);
 
-    std::map<ArgKey_t, ArgVal_t> config, data;
+    Args_t config_args, data_args;
+    std::string bad_arg;
 
-    EXPECT_FALSE(lap.Parse(config, data));
-    EXPECT_EQ(config.size(), 0);
-    EXPECT_EQ(data.size(), 0);
+    EXPECT_TRUE(lap.Parse(config_args, data_args, bad_arg));
+    EXPECT_EQ(config_args.size(), 5);
+    EXPECT_TRUE(LightArgParserHelper::KeyExists(config_args, "c"));
+    EXPECT_TRUE(LightArgParserHelper::KeyExists(config_args, "x"));
+    EXPECT_TRUE(LightArgParserHelper::KeyExists(config_args, "y"));
+    EXPECT_TRUE(LightArgParserHelper::KeyExists(config_args, "z"));
+    EXPECT_EQ(config_args["ConfigKey2"], "ConfigValue2");
+    EXPECT_EQ(data_args.size(), 3);
+    EXPECT_EQ(data_args["DataKey1"], "DataValue1");
+    EXPECT_EQ(data_args["DataKey2"], "DataValue2");
+    EXPECT_EQ(data_args["DataKey3"], "DataValue3");
 }

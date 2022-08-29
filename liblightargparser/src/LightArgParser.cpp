@@ -15,7 +15,7 @@ public:
 
     ~LightArgParserImpl() = default;
 
-    bool Parse(std::map<ArgKey_t, ArgVal_t>& config_args, std::map<ArgKey_t, ArgVal_t>& data)
+    bool Parse(Args_t& config_args, Args_t& data_args, std::string& bad_arg)
     {
         bool ret = true;
 
@@ -34,36 +34,50 @@ public:
 
             if (key[0] == kConfigArgIdChar)
             {
-                if ((key[1] != kConfigArgIdChar && key.size() == kConfigArgShortFormSize) ||
-                    (key[1] == kConfigArgIdChar && key.size() >= kConfigArgLongFormMinSize))
+                if (key[1] == kConfigArgIdChar && key[2] != kConfigArgIdChar &&
+                    key.size() >= kConfigArgLongFormMinSize)
                 {
-                    key.erase(
-                        std::remove(key.begin(), key.begin() + 2, kConfigArgIdChar), key.begin() + 2);
-
-                    if (key[0] == kConfigArgIdChar)
+                    // Config argument in long form, e.g.: --ConfigKey1 or --ConfigKey2=ConfigData2
+                    config_args.emplace(std::string{&key[2]}, val);
+                }
+                else if (key[1] != kConfigArgIdChar)
+                {
+                    if (key.size() == kConfigArgShortFormSingleSize)
+                    {
+                        // Config argument in short form single, e.g.: -x or -y=data
+                        config_args.emplace(std::string{&key[1]}, val);
+                    }
+                    else if (val == std::string{})
+                    {
+                        // Config argument in short form complex, e.g.: -xyz
+                        for (size_t i = 1; i < key.size(); ++i)
+                            config_args.emplace(std::string{key[i]}, std::string{});
+                    }
+                    else
                     {
                         ret = false;
+                        bad_arg = argv[i];
                         break;
                     }
                 }
                 else
                 {
                     ret = false;
+                    bad_arg = argv[i];
                     break;
                 }
-
-                config_args.emplace(key, val);
             }
             else
             {
-                data.emplace(key, val);
+                // Data argument
+                data_args.emplace(key, val);
             }
         }
 
         if (!ret)
         {
             config_args.clear();
-            data.clear();
+            data_args.clear();
         }
 
         return ret;
@@ -72,8 +86,8 @@ public:
 private:
     const char* kKeyValueDelimiter = "=";
     const char kConfigArgIdChar = '-';
-    const size_t kConfigArgShortFormSize = 2;
     const size_t kConfigArgLongFormMinSize = 4;
+    const size_t kConfigArgShortFormSingleSize = 2;
 
     int argc;
     const char** argv;
@@ -88,9 +102,9 @@ LightArgParser::~LightArgParser()
 {
 }
 
-bool LightArgParser::Parse(std::map<ArgKey_t, ArgVal_t>& config, std::map<ArgKey_t, ArgVal_t>& data)
+bool LightArgParser::Parse(Args_t& config_args, Args_t& data_args, std::string& bad_arg)
 {
-    return impl->Parse(config, data);
+    return impl->Parse(config_args, data_args, bad_arg);
 }
 
 } // namespace nlab
