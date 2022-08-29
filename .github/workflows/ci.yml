@@ -21,7 +21,7 @@ jobs:
           make
       - name: Run Tests
         run: |
-          build/tests/unit/LightArgParserTest
+          build/tests/unit/LightArgParserUnitTests
           build/tests/component/SimpleAppTest ./SimpleAppTest -v --help -xyz DataKey1=DataValue1 DataKey2 --file=/temp/file1
 
   Build-on-Windows:

@@ -38,7 +38,7 @@ TEST(LightArgParserTest, ParseLongFormConfigKey)
 
     EXPECT_TRUE(lap.Parse(config_args, data_args, bad_arg));
     EXPECT_EQ(config_args.size(), 1);
-    EXPECT_TRUE(LightArgParserHelper::KeyExists(config_args, "version"));
+    EXPECT_TRUE(LightArgParserHelper(config_args).KeyExists("version"));
     EXPECT_EQ(data_args.size(), 0);
 }
 
@@ -54,9 +54,9 @@ TEST(LightArgParserTest, ParseComplexShortFormConfigKey)
 
     EXPECT_TRUE(lap.Parse(config_args, data_args, bad_arg));
     EXPECT_EQ(config_args.size(), 3);
-    EXPECT_TRUE(LightArgParserHelper::KeyExists(config_args, "x"));
-    EXPECT_TRUE(LightArgParserHelper::KeyExists(config_args, "y"));
-    EXPECT_TRUE(LightArgParserHelper::KeyExists(config_args, "z"));
+    EXPECT_TRUE(LightArgParserHelper(config_args).KeyExists("x"));
+    EXPECT_TRUE(LightArgParserHelper(config_args).KeyExists("y"));
+    EXPECT_TRUE(LightArgParserHelper(config_args).KeyExists("z"));
     EXPECT_EQ(data_args.size(), 0);
 }
 
@@ -175,10 +175,10 @@ TEST(LightArgParserTest, ParseMix)
 
     EXPECT_TRUE(lap.Parse(config_args, data_args, bad_arg));
     EXPECT_EQ(config_args.size(), 5);
-    EXPECT_TRUE(LightArgParserHelper::KeyExists(config_args, "c"));
-    EXPECT_TRUE(LightArgParserHelper::KeyExists(config_args, "x"));
-    EXPECT_TRUE(LightArgParserHelper::KeyExists(config_args, "y"));
-    EXPECT_TRUE(LightArgParserHelper::KeyExists(config_args, "z"));
+    EXPECT_TRUE(LightArgParserHelper(config_args).KeyExists("c"));
+    EXPECT_TRUE(LightArgParserHelper(config_args).KeyExists("x"));
+    EXPECT_TRUE(LightArgParserHelper(config_args).KeyExists("y"));
+    EXPECT_TRUE(LightArgParserHelper(config_args).KeyExists("z"));
     EXPECT_EQ(config_args["ConfigKey2"], "ConfigValue2");
     EXPECT_EQ(data_args.size(), 3);
     EXPECT_EQ(data_args["DataKey1"], "DataValue1");

@@ -29,7 +29,7 @@ int main(int argc, char const* argv[])
         std::cout << "----------------------------------------\n";
         std::cout << "Simple argument analysis:\n";
 
-        if (LightArgParserHelper::AnyKeyExists(config_args, {"v", "version"}))
+        if (LightArgParserHelper(config_args).AnyKeyExists({"v", "version"}))
         {
             std::cout << "    Version was requested by user!\n";
         }

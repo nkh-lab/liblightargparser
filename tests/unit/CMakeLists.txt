@@ -1,9 +1,11 @@
 find_package(GTest REQUIRED)
 
-add_executable(LightArgParserTest
-    LightArgParserTest.cpp)
+file(GLOB SRC_FILES "*.cpp")
 
-target_link_libraries(LightArgParserTest
+add_executable(LightArgParserUnitTests
+    ${SRC_FILES})
+
+target_link_libraries(LightArgParserUnitTests
     PRIVATE ${PROJECT_NAME}
     PRIVATE ${GTEST_LIBRARIES}
     PRIVATE GTest::Main

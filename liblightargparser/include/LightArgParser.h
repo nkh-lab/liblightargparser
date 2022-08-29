@@ -25,24 +25,6 @@ private:
     std::unique_ptr<LightArgParserImpl> impl;
 };
 
-class LightArgParserHelper
-{
-public:
-    LightArgParserHelper() = default;
-    ~LightArgParserHelper() = default;
-
-    static inline bool KeyExists(const Args_t& args, const ArgKey_t& key)
-    {
-        return args.find(key) == args.end() ? false : true;
-    }
-
-    static inline bool AnyKeyExists(const Args_t& args, const std::vector<ArgKey_t>& keys)
-    {
-        for (auto key : keys)
-            if (args.find(key) == args.end()) return true;
-
-        return false;
-    }
-};
-
 } // namespace nlab
+
+#include "LightArgParserHelper.h"

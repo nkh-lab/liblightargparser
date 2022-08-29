@@ -41,7 +41,7 @@ int main(int argc, char const* argv[])
 
     if (lap.Parse(config_args, data_args, bad_arg))
     {
-        if (LightArgParserHelper::AnyKeyExists(config_args, {"v", "version"}))
+        if (LightArgParserHelper(config_args).AnyKeyExists({"v", "version"}))
             std::cout << "v1.0.0\n";
 
         for (auto d : data_args)
