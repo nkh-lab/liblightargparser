@@ -20,6 +20,8 @@ Application run example:
 ```
 $ ./my-app -v --help -xyz DataKey1 DataKey2=DataValue2 --file=/temp/file1
 ```
+## Build Status
+[![CI](https://github.com/nkh-lab/light-arg-parser/actions/workflows/ci.yml/badge.svg)](https://github.com/nkh-lab/light-arg-parser/actions/workflows/ci.yml)
 
 ## How to use
 This is a cmake based project, so add it to your build process, link your target to the `lightargparser` library, and include the `LightArgParser.h` header in your source code.
