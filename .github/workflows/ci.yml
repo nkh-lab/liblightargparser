@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  Build-on-Ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Checkout submodules
+        run: git submodule update --init --recursive
+      - name: Install dependencies
+        run: |
+          sudo apt-get install libgtest-dev
+      - name: Build
+        run: |
+          mkdir build && cd build
+          cmake -Dlightargparser_BUILD_UTESTS=on  -Dlightargparser_BUILD_CTESTS=on ..
+          make
+      - name: Run Tests
+        run: |
+          build/tests/unit/LightArgParserTest
+          build/tests/component/SimpleAppTest ./SimpleAppTest -v --help -xyz DataKey1=DataValue1 DataKey2 --file=/temp/file1
+
+  Build-on-Windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Checkout submodules
+        run: git submodule update --init --recursive
+      - uses: microsoft/setup-msbuild@v1.1
+      - name: Build
+        run: |
+          mkdir build && cd build
+          cmake -G "Visual Studio 17 2022" -Dlightargparser_BUILD_CTESTS=on .. 
+          cmake --build . --config Release
+      - name: Run Tests
+        run: |
+          build/tests/component/Release/SimpleAppTest.exe ./SimpleAppTest -v --help -xyz DataKey1=DataValue1 DataKey2 --file=/temp/file1
