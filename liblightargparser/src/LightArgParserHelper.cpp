@@ -21,7 +21,7 @@ public:
         if (args.size())
         {
             for (auto key : keys)
-                if (args.find(key) == args.end()) return true;
+                if (args.find(key) != args.end()) return true;
         }
         return false;
     }

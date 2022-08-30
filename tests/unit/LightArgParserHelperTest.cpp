@@ -21,5 +21,6 @@ TEST(LightArgParserHelperTest, ThreeArgs)
 
     EXPECT_TRUE(helper.KeyExists("key1"));
     EXPECT_TRUE(helper.AnyKeyExists({"key", "key1"}));
+    EXPECT_FALSE(helper.AnyKeyExists({"key", "k"}));
     EXPECT_EQ(helper.GetKeys().size(), 3);
 }
