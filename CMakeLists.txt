@@ -13,16 +13,5 @@ project(lightargparser)
 option(${PROJECT_NAME}_BUILD_CTESTS "Build component tests" off)
 option(${PROJECT_NAME}_BUILD_UTESTS "Build unit tests" off)
 
-file(GLOB SUBDIRS
-    "external"
-    "lib*"
-    "app*"
-    "tests"
-    )
-
-foreach(X IN LISTS SUBDIRS)
-    if(IS_DIRECTORY ${X})
-        add_subdirectory(${X})
-    endif()
-endforeach()
-
+add_subdirectory(liblightargparser)
+add_subdirectory(tests)
