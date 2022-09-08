@@ -22,7 +22,7 @@ public:
     bool Parse(Args_t& config_args, Args_t& data_args, std::string& bad_arg);
 
 private:
-    std::unique_ptr<LightArgParserImpl> impl;
+    std::unique_ptr<LightArgParserImpl> impl_;
 };
 
 } // namespace nlab

@@ -17,7 +17,7 @@ public:
     std::vector<ArgKey_t> GetKeys();
 
 private:
-    std::unique_ptr<LightArgParserHelperImpl> impl;
+    std::unique_ptr<LightArgParserHelperImpl> impl_;
 };
 
 } // namespace nlab

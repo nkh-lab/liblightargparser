@@ -94,7 +94,7 @@ private:
 };
 
 LightArgParser::LightArgParser(int argc, const char** argv)
-    : impl{std::make_unique<LightArgParserImpl>(argc, argv)}
+    : impl_{std::make_unique<LightArgParserImpl>(argc, argv)}
 {
 }
 
@@ -104,7 +104,7 @@ LightArgParser::~LightArgParser()
 
 bool LightArgParser::Parse(Args_t& config_args, Args_t& data_args, std::string& bad_arg)
 {
-    return impl->Parse(config_args, data_args, bad_arg);
+    return impl_->Parse(config_args, data_args, bad_arg);
 }
 
 } // namespace nlab

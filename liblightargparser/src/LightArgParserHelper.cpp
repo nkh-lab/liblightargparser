@@ -40,7 +40,7 @@ private:
 };
 
 LightArgParserHelper::LightArgParserHelper(const Args_t& args)
-    : impl{std::make_unique<LightArgParserHelperImpl>(args)}
+    : impl_{std::make_unique<LightArgParserHelperImpl>(args)}
 {
 }
 
@@ -50,17 +50,17 @@ LightArgParserHelper::~LightArgParserHelper()
 
 bool LightArgParserHelper::KeyExists(const ArgKey_t& key)
 {
-    return impl->KeyExists(key);
+    return impl_->KeyExists(key);
 }
 
 bool LightArgParserHelper::AnyKeyExists(const std::vector<ArgKey_t>& keys)
 {
-    return impl->AnyKeyExists(keys);
+    return impl_->AnyKeyExists(keys);
 }
 
 std::vector<ArgKey_t> LightArgParserHelper::GetKeys()
 {
-    return impl->GetKeys();
+    return impl_->GetKeys();
 }
 
 } // namespace nlab
