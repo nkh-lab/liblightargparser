@@ -2,8 +2,10 @@
 
 #include <algorithm>
 
-namespace nlab {
+namespace nkhlab {
+namespace lightargparser {
 
+namespace impl {
 class LightArgParserHelperImpl
 {
 public:
@@ -39,8 +41,10 @@ private:
     const Args_t& args;
 };
 
+} // namespace impl
+
 LightArgParserHelper::LightArgParserHelper(const Args_t& args)
-    : impl_{std::make_unique<LightArgParserHelperImpl>(args)}
+    : impl_{std::make_unique<impl::LightArgParserHelperImpl>(args)}
 {
 }
 
@@ -63,4 +67,5 @@ std::vector<ArgKey_t> LightArgParserHelper::GetKeys()
     return impl_->GetKeys();
 }
 
-} // namespace nlab
+} // namespace lightargparser
+} // namespace nkhlab

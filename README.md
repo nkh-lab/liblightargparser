@@ -30,7 +30,7 @@ API usage example:
 ```
 #include "LightArgParser.h"
 
-using namespace nlab;
+using namespace nkhlab;
 
 int main(int argc, char const* argv[])
 {

@@ -2,7 +2,7 @@
 
 #include "LightArgParser.h"
 
-using namespace nlab;
+using namespace nkhlab::lightargparser;
 
 int main(int argc, char const* argv[])
 {

@@ -5,9 +5,12 @@
 #include <string>
 #include <vector>
 
-namespace nlab {
+namespace nkhlab {
+namespace lightargparser {
 
+namespace impl {
 class LightArgParserImpl;
+}
 
 using ArgKey_t = std::string;
 using ArgVal_t = std::string;
@@ -22,9 +25,10 @@ public:
     bool Parse(Args_t& config_args, Args_t& data_args, std::string& bad_arg);
 
 private:
-    std::unique_ptr<LightArgParserImpl> impl_;
+    std::unique_ptr<impl::LightArgParserImpl> impl_;
 };
 
-} // namespace nlab
+} // namespace lightargparser
+} // namespace nkhlab
 
 #include "LightArgParserHelper.h"

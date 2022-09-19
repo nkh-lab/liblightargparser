@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 
-using namespace nlab;
+using namespace nkhlab::lightargparser;
 
 TEST(LightArgParserHelperTest, EmptyArgs)
 {

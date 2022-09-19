@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 
-using namespace nlab;
+using namespace nkhlab::lightargparser;
 
 template <typename T, size_t N>
 constexpr size_t arraySize(T (&)[N])

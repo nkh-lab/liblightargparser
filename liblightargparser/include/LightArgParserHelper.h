@@ -2,9 +2,12 @@
 
 #include "LightArgParser.h"
 
-namespace nlab {
+namespace nkhlab {
+namespace lightargparser {
 
+namespace impl {
 class LightArgParserHelperImpl;
+}
 
 class LightArgParserHelper
 {
@@ -17,7 +20,8 @@ public:
     std::vector<ArgKey_t> GetKeys();
 
 private:
-    std::unique_ptr<LightArgParserHelperImpl> impl_;
+    std::unique_ptr<impl::LightArgParserHelperImpl> impl_;
 };
 
-} // namespace nlab
+} // namespace lightargparser
+} // namespace nkhlab

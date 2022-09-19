@@ -2,8 +2,10 @@
 
 #include <algorithm>
 
-namespace nlab {
+namespace nkhlab {
+namespace lightargparser {
 
+namespace impl {
 class LightArgParserImpl
 {
 public:
@@ -93,8 +95,10 @@ private:
     const char** argv;
 };
 
+} // namespace impl
+
 LightArgParser::LightArgParser(int argc, const char** argv)
-    : impl_{std::make_unique<LightArgParserImpl>(argc, argv)}
+    : impl_{std::make_unique<impl::LightArgParserImpl>(argc, argv)}
 {
 }
 
@@ -107,4 +111,5 @@ bool LightArgParser::Parse(Args_t& config_args, Args_t& data_args, std::string& 
     return impl_->Parse(config_args, data_args, bad_arg);
 }
 
-} // namespace nlab
+} // namespace lightargparser
+} // namespace nkhlab
