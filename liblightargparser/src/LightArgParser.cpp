@@ -63,8 +63,8 @@ public:
                     else if (val == std::string{})
                     {
                         // Config argument in short form complex, e.g.: -xyz
-                        for (size_t i = 1; i < key.size(); ++i)
-                            config_args.emplace(std::string{key[i]}, std::string{});
+                        for (size_t ii = 1; ii < key.size(); ++ii)
+                            config_args.emplace(std::string{key[ii]}, std::string{});
                     }
                     else
                     {

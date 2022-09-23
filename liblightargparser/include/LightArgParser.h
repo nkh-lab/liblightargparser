@@ -19,13 +19,14 @@
 namespace nkhlab {
 namespace lightargparser {
 
+using ArgKey_t = std::string;
+using ArgVal_t = std::string;
+using Arg_t = std::pair<ArgKey_t, ArgVal_t>;
+using Args_t = std::map<ArgKey_t, ArgVal_t>;
+
 namespace impl {
 class LightArgParserImpl;
 }
-
-using ArgKey_t = std::string;
-using ArgVal_t = std::string;
-using Args_t = std::map<ArgKey_t, ArgVal_t>;
 
 class LightArgParser
 {

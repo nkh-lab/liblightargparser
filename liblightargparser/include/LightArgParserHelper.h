@@ -23,7 +23,7 @@ class LightArgParserHelperImpl;
 class LightArgParserHelper
 {
 public:
-    LightArgParserHelper(const Args_t& args);
+    explicit LightArgParserHelper(const Args_t& args);
     ~LightArgParserHelper();
 
     bool KeyExists(const ArgKey_t& key);

@@ -12,6 +12,7 @@
 #include "LightArgParserHelper.h"
 
 #include <algorithm>
+#include <iterator>
 
 namespace nkhlab {
 namespace lightargparser {
@@ -20,7 +21,7 @@ namespace impl {
 class LightArgParserHelperImpl
 {
 public:
-    LightArgParserHelperImpl(const Args_t& args)
+    explicit LightArgParserHelperImpl(const Args_t& args)
         : args{args}
     {
     }
@@ -43,7 +44,8 @@ public:
     {
         std::vector<ArgKey_t> keys;
 
-        for (auto a : args) keys.emplace_back(a.first);
+        std::transform(
+            args.cbegin(), args.cend(), std::back_inserter(keys), [](Arg_t a) { return a.first; });
 
         return keys;
     }
