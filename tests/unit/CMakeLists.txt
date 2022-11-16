@@ -9,20 +9,23 @@
 # but WITHOUT ANY WARRANTY.
 #  
 
-if(CMAKE_SYSTEM_NAME STREQUAL Linux)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror -Wextra")
-endif()
-
 find_package(GTest REQUIRED)
 
-file(GLOB SRC_FILES "*.cpp")
+file(GLOB SRC_FILES 
+    "*.cpp" 
+    "../../src/*.cpp"
+    )
 
-add_executable(LightArgParserUnitTests
-    ${SRC_FILES})
+add_executable(${PROJECT_NAME}-unit-tests
+    ${SRC_FILES}
+    )
 
-target_link_libraries(LightArgParserUnitTests
-    PRIVATE ${PROJECT_NAME}
-    PRIVATE ${GTEST_LIBRARIES}
+target_link_libraries(${PROJECT_NAME}-unit-tests
     PRIVATE GTest::Main
-    PRIVATE ${CMAKE_THREAD_LIBS_INIT}
+    PRIVATE gmock
+    )
+
+target_include_directories(${PROJECT_NAME}-unit-tests
+    PRIVATE "../../include"
+    PRIVATE "../../src"
     )
