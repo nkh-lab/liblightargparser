@@ -7,12 +7,12 @@
 #
 # This software is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY.
-#  
+#
 
 find_package(GTest REQUIRED)
 
-file(GLOB SRC_FILES 
-    "*.cpp" 
+file(GLOB SRC_FILES
+    "*.cpp"
     "../../src/*.cpp"
     )
 

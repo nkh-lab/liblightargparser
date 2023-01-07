@@ -1,7 +1,7 @@
 ## How to build
 From project root folder:
 ```
-$ mkdir build && cd build 
+$ mkdir build && cd build
 $ cmake -Dlightargparser_BUILD_CTESTS=on ..
 ```
 
@@ -14,15 +14,15 @@ Input arguments successfully parsed:
 ----------------------------------------
 Config arguments:
     file: /temp/file1
-    help: 
-    v: 
-    x: 
-    y: 
-    z: 
+    help:
+    v:
+    x:
+    y:
+    z:
 ----------------------------------------
 Data arguments:
     DataKey1: DataValue1
-    DataKey2: 
+    DataKey2:
 ----------------------------------------
 Simple argument analysis:
     Version was requested by user!
